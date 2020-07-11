@@ -2,16 +2,24 @@ package edu.ntub.demo.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Data
+@Table(name = "product")
 @Entity
-@Table(name = "product", schema = "demo")
+@Data
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "price")
     private Integer price;
+
+
 }

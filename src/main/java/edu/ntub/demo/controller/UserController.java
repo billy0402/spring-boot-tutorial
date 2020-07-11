@@ -4,6 +4,7 @@ import edu.ntub.demo.bean.UserBean;
 import edu.ntub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,8 +26,8 @@ public class UserController {
         this.userService = userService;
     }
 
-
-    @PostMapping(path = "/create")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(path = "/create", produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserBean> setUser(@Valid @RequestBody UserBean user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
@@ -42,5 +43,11 @@ public class UserController {
 //        }
         UserBean userBean = userService.setUser(user);
         return ResponseEntity.ok(userBean);
+    }
+
+    @PreAuthorize("hasAuthority('USER')")
+    @PostMapping(path = "/test", produces = "application/json;charset=UTF-8")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("{\"result\": true}");
     }
 }

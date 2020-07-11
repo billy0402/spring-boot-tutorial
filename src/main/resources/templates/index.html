@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-TW"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>首頁</title>
+</head>
+<body>
+<h1>Hello! <span sec:authentication="name">Unknown</span></h1>
+<a href="admin.html" th:href="@{/admin}" sec:authentication="hasAuthority('ADMIN')">系統管理員</a>
+<a href="user.html" th:href="@{/user}" sec:authentication="hasAnyAuthority('ADMIN', 'USER')">一般使用者</a>
+</body>
+</html>
